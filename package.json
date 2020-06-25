@@ -1,0 +1,8 @@
+{
+  "name": "stocktake-webapp",
+  "scripts": {
+    "preinstall": "yarn --ignore-engines --cwd ./functions",
+    "build": "echo 'would build'"
+  },
+  "private": true
+}
