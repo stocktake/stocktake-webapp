@@ -10,7 +10,7 @@
     "predeploy": ["yarn --ignore-engines --cwd \"$RESOURCE_DIR\" build"]
   },
   "hosting": {
-    "public": "public",
+    "public": "build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
