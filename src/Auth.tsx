@@ -47,7 +47,7 @@ function Auth() {
             Hello {firebase.auth().currentUser?.displayName}! You are a....
             poopyface
           </p>
-          <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+          <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
         </div>
       )}
     </div>
