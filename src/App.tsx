@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './assets/img/3d-stocktake-logo.jpg'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import axios from 'axios'
+import './App.css'
+import Auth from './Auth'
+
+const getFirebaseConfig = new Promise((resolve, reject) => {
+  axios
+    .get(`/__/firebase/init.json`)
+    .then((res) => {
+      resolve(res.data)
+    })
+    .catch((err) => reject(err))
+})
 
 function App() {
+  const [initialized, setInitialized] = React.useState(false)
+
+  React.useEffect(() => {
+    getFirebaseConfig.then((result: any) => {
+      firebase.initializeApp(result)
+      setInitialized(true)
+    })
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <section>{initialized && <Auth />}</section>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
