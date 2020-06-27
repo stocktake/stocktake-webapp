@@ -78,3 +78,9 @@ build/Release
 # Yarn Integrity file
 .yarn-integrity
 
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
