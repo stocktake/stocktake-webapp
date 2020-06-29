@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './assets/img/3d-stocktake-logo.jpg'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
