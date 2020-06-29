@@ -1,25 +1,14 @@
 import React from 'react'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import LogRocket from 'logrocket'
 
 function Auth() {
   const [loading, setLoading] = React.useState(true)
-  const [isSignedIn, setIsSignedIn] = React.useState(true)
-
-  React.useEffect(() => {
-    console.log(firebase.auth().currentUser)
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => setIsSignedIn(!!user))
-
-    return unregisterAuthObserver
-  }, [])
+  const user = firebase.auth().currentUser
 
   const uiConfig = {
     callbacks: {
-      signInSuccess: (auth: any) => {
-        console.log(auth)
-      },
       signInSuccessWithAuthResult: () => false,
       uiShown: function () {
         setLoading(false)
@@ -29,24 +18,29 @@ function Auth() {
     signInFlow: 'popup',
     signInOptions: [
       {
-        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        requireDisplayName: false
+        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
       },
       // List of OAuth providers supported.
       firebase.auth.GoogleAuthProvider.PROVIDER_ID
     ]
   }
 
+  React.useEffect(() => {
+    if (!!user) {
+      LogRocket.identify(user.uid, {
+        name: `${user.displayName}`,
+        email: `${user.email}`
+      })
+    }
+  }, [user])
+
   return (
     <div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
       {loading && <p>Loading....</p>}
-      {isSignedIn && (
+      {!!user && (
         <div>
-          <p>
-            Hello {firebase.auth().currentUser?.displayName}! You are a....
-            poopyface
-          </p>
+          <p>Hello {user.displayName}! You are a.... poopyface</p>
           <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
         </div>
       )}

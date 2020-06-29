@@ -75,7 +75,7 @@ build/Release
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
+# Yarn
 .yarn-integrity
 
 .yarn/*
@@ -84,3 +84,7 @@ build/Release
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# Tailwind
+
+src/tailwind.generated.css
